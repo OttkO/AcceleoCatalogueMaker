@@ -1,4 +1,5 @@
 import re
+import os
 class AcceleoFileParser:
     templates = {}
     queries = {}
@@ -27,3 +28,36 @@ class AcceleoFileParser:
 
     def get_queries(self):
         return self.queries
+    
+    def saveTemplatesToAFile(self):
+        f = open("templates.txt","w")
+        
+        for i in self.templates:
+            f.write( str(self.templates[i]) )
+            
+        f.close()
+    
+    def saveQueriesToAFile(self):
+        f = open("queries.txt","w")
+        
+        for i in self.queries:
+            f.write( str(self.queries[i]) )
+            
+        f.close()
+    
+    def saveQueriesAndTemplatesToOneFile(self):
+        f = open("QueriesANdTemplates.txt","w")
+        
+        for i in self.templates:
+            f.write(str(self.templates[i]))
+        for i in self.queries:
+            f.write( str(self.queries[i]) )
+        f.close()
+    def parseAll(self, inputDirectory):
+        for root, _, files in os.walk(inputDirectory):
+                for file in files:
+                    if file.endswith('.mtl'):
+                        relativePath = (os.path.join(root, file))            
+                        self.parseFile(relativePath)
+            
+         
